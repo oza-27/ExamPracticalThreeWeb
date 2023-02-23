@@ -28,6 +28,9 @@ namespace Exam.DataAccess.Repository
             return query.ToList();
         }
 
-
+        public void add(T entity)
+        {
+            _db.Add(entity);
+        }
     }
 }

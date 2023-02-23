@@ -10,12 +10,12 @@ namespace ExamPracticalThree.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public OrderController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AuthenticationController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -122,6 +122,5 @@ namespace ExamPracticalThree.Controllers
             }
             return Unauthorized();
         }
-
     }
 }

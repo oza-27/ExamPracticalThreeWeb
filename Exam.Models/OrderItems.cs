@@ -15,10 +15,8 @@ namespace Exam.Models
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]
-        public Orders Order { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        public Product Product { get; set; }
         public int Quantity { get; set; }
         public double Price { get; set; }
         public bool IsActive { get; set; }

@@ -10,6 +10,8 @@ namespace Exam.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
-
+        IOrderRepository Order { get; }
+        IOrderItemRepository OrderItem { get; }
+        void Save();
     }
 }

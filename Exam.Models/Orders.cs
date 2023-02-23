@@ -11,7 +11,6 @@ namespace Exam.Models
     {
         [Key]
         public int OrderId { get; set; }
-        public DateOnly OrderDate { get; set; }
         public string Note { get; set; }
         public int DiscountAmount { get; set; }
         public enum StatusType
@@ -27,6 +26,7 @@ namespace Exam.Models
         public string CustEmail { get; set; }
         public int CustomerContactNumber { get; set; }
         public bool IsActive { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
         public DateTime createdOn { get; set; } = DateTime.Now;
         public DateTime updatedOn { get; set; } = DateTime.Now;
     }
