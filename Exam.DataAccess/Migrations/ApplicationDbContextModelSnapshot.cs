@@ -106,10 +106,6 @@ namespace Exam.DataAccess.Migrations
 
                     b.HasKey("OrderItemId");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
                     b.ToTable("orderItems");
                 });
 
@@ -123,8 +119,9 @@ namespace Exam.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("CustomerContactNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("CustomerContactNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -143,8 +140,8 @@ namespace Exam.DataAccess.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<double>("TotalAmount")
-                        .HasColumnType("double");
+                    b.Property<int>("TotalAmount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("createdOn")
                         .HasColumnType("datetime(6)");
@@ -348,25 +345,6 @@ namespace Exam.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("categories");
-                });
-
-            modelBuilder.Entity("Exam.Models.OrderItems", b =>
-                {
-                    b.HasOne("Exam.Models.Orders", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Exam.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Exam.Models.Product", b =>

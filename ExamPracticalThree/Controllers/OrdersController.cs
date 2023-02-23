@@ -1,10 +1,7 @@
 ﻿using Exam.DataAccess.Repository.IRepository;
 using Exam.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PracticalRazorTaskAPI.Model;
-using System.Net;
 
 namespace ExamPracticalThree.Controllers
 {
@@ -39,10 +36,10 @@ namespace ExamPracticalThree.Controllers
             var result = _unitOfWork.Order.GetAll();
             return result;
         }
-        [HttpPost]
-        [Route("AddOrder")]
 
-        public async Task<IActionResult> AddOrder(Orders order)
+        [HttpPost]
+        [Route("AddOrder/")]
+        public async Task<IActionResult> AddOrder([FromBody]Orders order)
         {
             _unitOfWork.Order.add(order);
             _unitOfWork.Save();
@@ -51,7 +48,6 @@ namespace ExamPracticalThree.Controllers
 
         [HttpPost]
         [Route("AddOrderItems/")]
-
         public async Task<IActionResult> AddOrderItems(OrderItems orderItems)
         {
             _unitOfWork.OrderItem.add(orderItems);

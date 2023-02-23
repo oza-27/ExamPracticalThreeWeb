@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230223063411_addUpgradedStuffTodb")]
-    partial class addUpgradedStuffTodb
+    [Migration("20230223125812_addToDb")]
+    partial class addToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,10 +108,6 @@ namespace Exam.DataAccess.Migrations
 
                     b.HasKey("OrderItemId");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
                     b.ToTable("orderItems");
                 });
 
@@ -125,8 +121,9 @@ namespace Exam.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("CustomerContactNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("CustomerContactNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -142,11 +139,11 @@ namespace Exam.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateOnly>("OrderDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<double>("TotalAmount")
-                        .HasColumnType("double");
+                    b.Property<int>("TotalAmount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("createdOn")
                         .HasColumnType("datetime(6)");
@@ -157,6 +154,49 @@ namespace Exam.DataAccess.Migrations
                     b.HasKey("OrderId");
 
                     b.ToTable("orders");
+                });
+
+            modelBuilder.Entity("Exam.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("isCreated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("isModified")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -306,69 +346,18 @@ namespace Exam.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("categories");
                 });
 
-            modelBuilder.Entity("PracticalRazorTaskAPI.Model.Product", b =>
+            modelBuilder.Entity("Exam.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("isCreated")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("isModified")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("ProductId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Product");
-                });
-
-            modelBuilder.Entity("Exam.Models.OrderItems", b =>
-                {
-                    b.HasOne("Exam.Models.Orders", "Order")
+                    b.HasOne("PracticalRazorTaskAPI.Model.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PracticalRazorTaskAPI.Model.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -420,17 +409,6 @@ namespace Exam.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PracticalRazorTaskAPI.Model.Product", b =>
-                {
-                    b.HasOne("PracticalRazorTaskAPI.Model.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

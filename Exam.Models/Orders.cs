@@ -20,11 +20,11 @@ namespace Exam.Models
             Shipped,
             Paid
         };
-        public double TotalAmount { get; set; }
+        public int TotalAmount { get; set; }
         public string CustomerName { get; set; }
         [EmailAddress]
         public string CustEmail { get; set; }
-        public int CustomerContactNumber { get; set; }
+        public string CustomerContactNumber { get; set; }
         public bool IsActive { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
         public DateTime createdOn { get; set; } = DateTime.Now;
