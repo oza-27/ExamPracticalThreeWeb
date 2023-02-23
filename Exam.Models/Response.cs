@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Exam.Models
 {
-    public class ResponseModel
+    public class Response
     {
-        public string message { get; set; }
-        public int Status { get; set; }
-        public dynamic Data { get; set; }
+        public string Status { get; set; }
+        public string Message { get; set; }
+
     }
 }
