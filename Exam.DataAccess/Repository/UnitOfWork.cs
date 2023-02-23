@@ -1,6 +1,8 @@
 ﻿using Exam.DataAccess.Data;
 using Exam.DataAccess.Repository.IRepository;
 using Exam.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using PracticalRazorTaskAPI.Model;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,16 @@ namespace Exam.DataAccess.Repository
     {
         private ApplicationDbContext _db;
 
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             Product = new ProductRepository(_db);
+
         }
         public ICategoryRepository Category { get; private set; }
         public IProductRepository Product { get; private set; }
+
     }
 }

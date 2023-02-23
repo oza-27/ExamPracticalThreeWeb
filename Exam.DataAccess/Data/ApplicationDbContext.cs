@@ -12,6 +12,12 @@ namespace Exam.DataAccess.Data
         {
             
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
         public DbSet<Orders> orders { get; set; }
         public DbSet<OrderItems> orderItems { get; set; }
         public DbSet<Product> products { get; set; }

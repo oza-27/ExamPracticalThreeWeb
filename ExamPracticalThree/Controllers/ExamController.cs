@@ -1,11 +1,13 @@
 ﻿using Exam.DataAccess.Repository.IRepository;
 using Exam.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PracticalRazorTaskAPI.Model;
 
 namespace ExamPracticalThree.Controllers
 {
+    [Authorize(Roles ="admin,user")]
     [Route("api/[controller]")]
     [ApiController]
     public class ExamController : ControllerBase
