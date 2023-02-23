@@ -30,7 +30,7 @@ namespace Exam.DataAccess.Repository
 
         public void add(T entity)
         {
-            _db.Add(entity);
+            dbSet.Add(entity);
         }
     }
 }

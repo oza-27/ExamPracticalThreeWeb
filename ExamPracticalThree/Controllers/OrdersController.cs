@@ -8,7 +8,6 @@ using System.Net;
 
 namespace ExamPracticalThree.Controllers
 {
-    [Authorize(Roles ="admin,user")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
@@ -42,7 +41,7 @@ namespace ExamPracticalThree.Controllers
         }
         [HttpPost]
         [Route("AddOrder")]
-        [AllowAnonymous]
+
         public async Task<IActionResult> AddOrder(Orders order)
         {
             _unitOfWork.Order.add(order);
@@ -52,7 +51,7 @@ namespace ExamPracticalThree.Controllers
 
         [HttpPost]
         [Route("AddOrderItems/")]
-        [AllowAnonymous]
+
         public async Task<IActionResult> AddOrderItems(OrderItems orderItems)
         {
             _unitOfWork.OrderItem.add(orderItems);
