@@ -3,6 +3,7 @@ using System;
 using Exam.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230224043334_toDatabase")]
+    partial class toDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,8 +108,6 @@ namespace Exam.DataAccess.Migrations
 
                     b.HasKey("OrderItemId");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("orderItems");
                 });
 
@@ -129,8 +129,8 @@ namespace Exam.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double?>("DiscountAmount")
-                        .HasColumnType("double");
+                    b.Property<int>("DiscountAmount")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
@@ -146,8 +146,8 @@ namespace Exam.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double?>("TotalAmount")
-                        .HasColumnType("double");
+                    b.Property<int>("TotalAmount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("createdOn")
                         .HasColumnType("datetime(6)");
@@ -351,17 +351,6 @@ namespace Exam.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("categories");
-                });
-
-            modelBuilder.Entity("Exam.Models.OrderItems", b =>
-                {
-                    b.HasOne("Exam.Models.Orders", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Exam.Models.Product", b =>

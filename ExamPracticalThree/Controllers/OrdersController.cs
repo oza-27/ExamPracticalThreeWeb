@@ -1,5 +1,7 @@
 ﻿using Exam.DataAccess.Repository.IRepository;
 using Exam.Models;
+using Exam.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PracticalRazorTaskAPI.Model;
 
@@ -10,49 +12,91 @@ namespace ExamPracticalThree.Controllers
     public class OrdersController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;
+        private UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(IUnitOfWork unitOfWork)
+        public OrdersController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
-        }
-
-        [HttpGet]
-        [Route("GetCategory/")]
-        public IEnumerable<Category> GetCategories()
-        {
-            return _unitOfWork.Category.GetAll();
+            _userManager = userManager;
         }
 
         [HttpGet]
         [Route("GetProducts/")]
-        public IEnumerable<Product> GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            return _unitOfWork.Product.GetAll();
+            var result = _unitOfWork.Product.GetAll();
+            var prodList = result.Select(x => new
+            {
+                x.ProductId,
+                x.Name,
+                x.Quantity,
+                x.Price
+            });
+
+            return Ok(prodList);
         }
+
         [HttpGet]
         [Route("GetOrders/")]
-        public IEnumerable<Orders> GetOrder()
+        public async Task<IActionResult> GetOrder()
         {
             var result = _unitOfWork.Order.GetAll();
-            return result;
+            var filtData = result.Select(x => new
+            {
+                x.OrderId,
+                x.Note,
+                x.StatusType,
+                x.createdOn
+            });
+            return Ok(filtData);
         }
 
         [HttpPost]
         [Route("AddOrder/")]
-        public async Task<IActionResult> AddOrder([FromBody]Orders order)
+        public async Task<IActionResult> AddOrder([FromBody] RequestOrderItems orderReq)
         {
-            _unitOfWork.Order.add(order);
-            _unitOfWork.Save();
-            return Ok(order);
-        }
+            var user = await _userManager.FindByNameAsync(orderReq.Username);
+            var totalAmt = orderReq.Price * orderReq.Quantity;
+            if (user == null)
+            {
+                return BadRequest("You have to login first");
+            }
+            else
+            {
+                var check = _unitOfWork.Order.GetFirstOrDefault(x => x.CustomerName == orderReq.Username);
+                var orderData = new Orders();
+                if (orderData == null)
+                {
+                    orderData.CustomerName = user.UserName;
+                    orderData.CustEmail = user.Email;
+                    orderData.CustomerContactNumber = user.PhoneNumber;
+                    orderData.StatusType = StatusType.Open.ToString();
+                    orderData.IsActive = true;
+                    orderData.DiscountAmount = 0;
+                    orderData.Note = "";
+                    orderData.TotalAmount = totalAmt;
 
-        [HttpPost]
-        [Route("AddOrderItems/")]
-        public async Task<IActionResult> AddOrderItems(OrderItems orderItems)
-        {
-            _unitOfWork.OrderItem.add(orderItems);
-            _unitOfWork.Save();
-            return Ok(orderItems);
+                    _unitOfWork.Order.add(orderData);
+                    _unitOfWork.Save();
+                }
+                else
+                {
+                    var orderId = _unitOfWork.Order.GetFirstOrDefault(x => x.CustomerName == orderReq.Username);
+                    var orderItemData = new OrderItems()
+                    {
+                        Quantity = orderReq.Quantity,
+                        OrderId = orderId.OrderId,
+                        ProductId = orderReq.ProductId,
+                    };
+
+                    _unitOfWork.OrderItem.add(orderItemData);
+                    _unitOfWork.Save();
+                }
+            }
+            return Ok(new ResponseModel()
+            {
+                Message = "order Added successfully:"
+            });
         }
     }
 }

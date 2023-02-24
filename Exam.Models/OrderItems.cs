@@ -15,6 +15,7 @@ namespace Exam.Models
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]
+        public Orders Order { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public int Quantity { get; set; }
