@@ -37,7 +37,8 @@ namespace ExamPracticalThree.Controllers
                 {
                     Email = model.Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    UserName = model.Username
+                    UserName = model.Username,
+                    PhoneNumber = model.PhoneNumber,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded)

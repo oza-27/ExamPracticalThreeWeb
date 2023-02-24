@@ -38,5 +38,15 @@ namespace Exam.DataAccess.Repository
             query = query.Where(filter);
             return query.FirstOrDefault();
         }
+
+        public void Remove(T entity)
+        {
+            dbSet.Remove(entity);
+        }
+
+        public void RemoveRange(IEnumerable<T> entities)
+        {
+            dbSet.RemoveRange(entities);
+        }
     }
 }

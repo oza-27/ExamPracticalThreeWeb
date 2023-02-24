@@ -12,5 +12,7 @@ namespace Exam.DataAccess.Repository.IRepository
         IEnumerable<T> GetAll();
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
         void add(T entity);
+        void Remove(T entity);
+        void RemoveRange(IEnumerable<T> entities);
     }
 }
