@@ -1,4 +1,5 @@
 ﻿using Exam.Models;
+using Exam.Models.DataEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

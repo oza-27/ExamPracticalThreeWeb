@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exam.Models
+namespace Exam.Models.DataEntities
 {
     public class UserRoles
     {

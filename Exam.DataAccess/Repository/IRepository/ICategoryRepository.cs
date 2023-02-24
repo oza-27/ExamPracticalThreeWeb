@@ -1,4 +1,4 @@
-﻿using PracticalRazorTaskAPI.Model;
+﻿using Exam.Models.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

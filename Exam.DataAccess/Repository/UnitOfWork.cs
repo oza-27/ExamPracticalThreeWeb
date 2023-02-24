@@ -1,14 +1,5 @@
 ﻿using Exam.DataAccess.Data;
 using Exam.DataAccess.Repository.IRepository;
-using Exam.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using PracticalRazorTaskAPI.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Exam.DataAccess.Repository
 {

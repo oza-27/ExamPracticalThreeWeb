@@ -1,6 +1,6 @@
 ﻿using Exam.DataAccess.Data;
 using Exam.DataAccess.Repository.IRepository;
-using Exam.Models;
+using Exam.Models.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

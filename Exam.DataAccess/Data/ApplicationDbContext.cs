@@ -1,8 +1,8 @@
 ﻿using Exam.Models;
+using Exam.Models.DataEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PracticalRazorTaskAPI.Model;
 
 namespace Exam.DataAccess.Data
 {
